@@ -2,12 +2,10 @@
 
 namespace Greenelf\Panel;
 
-use Greenelf\Panel\CrudController;
-
-class LinkController extends CrudController {
-
-    public function all($entity) {
-
+class LinkController extends CrudController
+{
+    public function all($entity)
+    {
         parent::all($entity);
 
         $this->filter = \DataFilter::source(new Link());
@@ -27,16 +25,15 @@ class LinkController extends CrudController {
         return $this->returnView();
     }
 
-    public function edit($entity) {
-
+    public function edit($entity)
+    {
         parent::edit($entity);
 
         $this->edit = \DataEdit::source(new Link());
 
-        Link::creating(function($link)
-        {
+        Link::creating(function ($link) {
             $appHelper = new libs\AppHelper();
-            return ( class_exists( $appHelper->getNameSpace() . $link['url'] ));
+            return (class_exists($appHelper->getNameSpace() . $link['url']));
         });
 
         $helpMessage = \Lang::get('panel::fields.links_help');
@@ -47,7 +44,7 @@ class LinkController extends CrudController {
         $this->edit->add('url', 'link', 'text')->rule('required');
 
         $this->edit->saved(function () use ($entity) {
-           $this->edit->message(\Lang::get('panel::fields.dataSavedSuccessfull'));
+            $this->edit->message(\Lang::get('panel::fields.dataSavedSuccessfull'));
             $this->edit->link('panel/Permission/all', \Lang::get('panel::fields.back'));
         });
         $this->addHelperMessage($helpMessage);
