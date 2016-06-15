@@ -1,12 +1,12 @@
 <?php
 
-namespace Serverfireteam\Panel\libs;
+namespace Greenelf\Panel\libs;
 
 use Lang;
 use Closure;
 use Gate;
 
-use Serverfireteam\Panel\Admin;
+use Greenelf\Panel\Admin;
 
 class PermissionCheckMiddleware
 {

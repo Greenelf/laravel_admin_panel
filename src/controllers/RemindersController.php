@@ -1,5 +1,5 @@
 <?php
-namespace Serverfireteam\Panel;
+namespace Greenelf\Panel;
 
 use Illuminate\Contracts\Auth\PasswordBroker as PasswordBrokerContract;
 use Illuminate\Routing\Controller;

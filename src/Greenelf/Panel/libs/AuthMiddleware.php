@@ -1,6 +1,6 @@
 <?php
 
-namespace Serverfireteam\Panel\libs;
+namespace Greenelf\Panel\libs;
 
 use Lang;
 use Closure;

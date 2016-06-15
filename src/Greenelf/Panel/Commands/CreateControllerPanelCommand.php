@@ -1,4 +1,4 @@
-<?php namespace  Serverfireteam\Panel\Commands;
+<?php namespace  Greenelf\Panel\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
@@ -36,7 +36,7 @@ class CreateControllerPanelCommand extends GeneratorCommand {
                     return __DIR__.'/stubs/controller.plain.stub';
             }
 
-            return base_path().'/vendor/serverfireteam/panel/src/Serverfireteam/Panel/stubs/panelController.stub';
+            return base_path().'/vendor/greenelf/panel/src/Greenelf/Panel/stubs/panelController.stub';
 	}
 
 	/**

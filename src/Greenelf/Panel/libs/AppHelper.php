@@ -1,5 +1,5 @@
 <?php
-namespace Serverfireteam\Panel\libs;
+namespace Greenelf\Panel\libs;
 
 /* 
  * To change this license header, choose License Headers in Project Properties.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Serverfireteam\Panel;
+namespace Greenelf\Panel;
 trait HasRoles
 {
 
@@ -11,7 +11,7 @@ trait HasRoles
      */
     public function roles()
     {
-        return $this->belongsToMany('Serverfireteam\Panel\Role');
+        return $this->belongsToMany('Greenelf\Panel\Role');
     }
 
     /**

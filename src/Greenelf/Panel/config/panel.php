@@ -16,7 +16,7 @@ return array(
        'Role',  
        'Link'
     ),
-    'logo'=>'packages/serverfireteam/panel/img/logo.png' // logo of Panel 
+    'logo'=>'packages/greenelf/panel/img/logo.png' // logo of Panel
     
 );
     

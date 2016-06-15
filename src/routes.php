@@ -12,7 +12,7 @@ Route::group(array('prefix' => 'panel', 'middleware' => ['web','PanelAuth']), fu
         {
             $composer_lock = json_decode(File::get(base_path().'/composer.lock'),true);
             foreach($composer_lock['packages'] as $key=>$value){
-                if($value['name'] =="serverfireteam/panel")
+                if($value['name'] =="greenelf/panel")
                     $version =  $value['version'];
             }
         }
@@ -30,11 +30,11 @@ Route::group(array('prefix' => 'panel', 'middleware' => ['web','PanelAuth']), fu
     Route::group(array('middleware' => ['PermissionPanel']), function()
     {
 
-        Route::any('/{entity}/export/{type}', array('uses' => 'Serverfireteam\Panel\ExportImportController@export'));
-        Route::post('/{entity}/import', array('uses' => 'Serverfireteam\Panel\ExportImportController@import'));
-        Route::any('/{entity}/{methods}', array('uses' => 'Serverfireteam\Panel\MainController@entityUrl'));
-        Route::post('/edit', array('uses' => 'Serverfireteam\Panel\ProfileController@postEdit'));
-        Route::get('/edit', array('uses' => 'Serverfireteam\Panel\ProfileController@getEdit'));
+        Route::any('/{entity}/export/{type}', array('uses' => 'Greenelf\Panel\ExportImportController@export'));
+        Route::post('/{entity}/import', array('uses' => 'Greenelf\Panel\ExportImportController@import'));
+        Route::any('/{entity}/{methods}', array('uses' => 'Greenelf\Panel\MainController@entityUrl'));
+        Route::post('/edit', array('uses' => 'Greenelf\Panel\ProfileController@postEdit'));
+        Route::get('/edit', array('uses' => 'Greenelf\Panel\ProfileController@getEdit'));
 
     });
 
@@ -42,29 +42,29 @@ Route::group(array('prefix' => 'panel', 'middleware' => ['web','PanelAuth']), fu
 /**
  * Admin userPassword change
  */
-    Route::get('/changePassword', array('uses' => 'Serverfireteam\Panel\RemindersController@getChangePassword'));
+    Route::get('/changePassword', array('uses' => 'Greenelf\Panel\RemindersController@getChangePassword'));
 
-    Route::post('/changePassword', array('uses' => 'Serverfireteam\Panel\RemindersController@postChangePassword'));
+    Route::post('/changePassword', array('uses' => 'Greenelf\Panel\RemindersController@postChangePassword'));
 });
 Route::group(array('middleware' => ['web']), function()
 {
-    Route::post('/panel/login', array('uses' => 'Serverfireteam\Panel\AuthController@postLogin'));
+    Route::post('/panel/login', array('uses' => 'Greenelf\Panel\AuthController@postLogin'));
 
     Route::get('/panel/password/reset/{token}', function ($token){
         return View::make('panelViews::passwordReset')->with('token', $token);
     });
 
-    Route::get('/panel/logout', array('uses' => 'Serverfireteam\Panel\AuthController@doLogout'));
+    Route::get('/panel/logout', array('uses' => 'Greenelf\Panel\AuthController@doLogout'));
 
-    Route::post('/panel/reset', array('uses' => 'Serverfireteam\Panel\RemindersController@postReset'));
+    Route::post('/panel/reset', array('uses' => 'Greenelf\Panel\RemindersController@postReset'));
 
-    Route::get('/panel/reset', array('uses' => 'Serverfireteam\Panel\RemindersController@getReset'));
+    Route::get('/panel/reset', array('uses' => 'Greenelf\Panel\RemindersController@getReset'));
 
-    Route::get('/panel/remind',  array('uses' => 'Serverfireteam\Panel\RemindersController@getRemind'));
+    Route::get('/panel/remind',  array('uses' => 'Greenelf\Panel\RemindersController@getRemind'));
 
-    Route::post('/panel/remind', array('uses' => 'Serverfireteam\Panel\RemindersController@postRemind'));
+    Route::post('/panel/remind', array('uses' => 'Greenelf\Panel\RemindersController@postRemind'));
 
-    Route::get('/panel/login',  array('uses' => 'Serverfireteam\Panel\AuthController@getLogin'));
+    Route::get('/panel/login',  array('uses' => 'Greenelf\Panel\AuthController@getLogin'));
 });
 
 Route::group(array('prefix' => 'elfinder', 'middleware' => ['web','PanelAuth']), function()

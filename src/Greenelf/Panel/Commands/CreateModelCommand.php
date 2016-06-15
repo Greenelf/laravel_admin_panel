@@ -1,4 +1,4 @@
-<?php namespace Serverfireteam\Panel\Commands;
+<?php namespace Greenelf\Panel\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Input\InputOption;
@@ -33,7 +33,7 @@ class CreateModelCommand extends GeneratorCommand {
 	 */
 	protected function getStub()
 	{
-		return base_path().'/vendor/serverfireteam/panel/src/Serverfireteam/Panel/stubs/model.stub';
+		return base_path().'/vendor/greenelf/panel/src/Greenelf/Panel/stubs/model.stub';
 	}
 
 	/**
