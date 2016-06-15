@@ -7,62 +7,62 @@ class CrudController extends Controller
 {
     const ID_COLUMN = 'id';
 
-    public    $grid;
-    public    $entity;
-    public    $set;
-    public    $edit;
-    public    $filter;
+    public $grid;
+    public $entity;
+    public $set;
+    public $edit;
+    public $filter;
     protected $lang;
-    public    $helper_message;
+    public $helper_message;
 
     public function __construct(\Lang $lang)
     {
-       // $this->entity = $params['entity'];
         $route = \App::make('route');
         $this->lang = $lang;
         $this->route = $route;
-        if($route = $route::current())
-        {
+        if ($route = $route::current()) {
             $routeParamters = $route->parameters();
-            if(isset($routeParamters['entity']))
+            if (isset($routeParamters['entity']))
                 $this->setEntity($routeParamters['entity']);
         }
     }
 
     /**
-    * @param string $entity name of the entity
-    */
+     * @param string $entity name of the entity
+     */
     public function all($entity)
     {
         //$this->addStylesToGrid();
     }
 
     /**
-    * @param string $entity name of the entity
-    */
+     * @param string $entity name of the entity
+     */
     public function edit($entity)
     {
 
     }
 
-    public function getEntity() {
+    public function getEntity()
+    {
         return $this->entity;
     }
 
-    public function setEntity($entity) {
+    public function setEntity($entity)
+    {
         $this->entity = $entity;
     }
 
-    public function getEntityModel() {
-
+    public function getEntityModel()
+    {
         $entity = $this->getEntity();
 
         $appHelper = new libs\AppHelper;
 
-        if ( in_array($entity, Link::getMainUrls()) ) {
-            $modelClass = 'Greenelf\\Panel\\'.$entity;
+        if (in_array($entity, Link::getMainUrls())) {
+            $modelClass = 'Greenelf\\Panel\\' . $entity;
         } else {
-            $modelClass = $appHelper->getNameSpace().$this->getEntity();
+            $modelClass = $appHelper->getNameSpace() . $this->getEntity();
         }
 
         return new $modelClass;
@@ -88,40 +88,41 @@ class CrudController extends Controller
 
     public function returnView()
     {
-        $configs = \Greenelf\Panel\Link::returnUrls();
+        $configs = Link::returnUrls();
 
         if (!isset($configs) || $configs == null) {
             throw new \Exception('NO URL is set yet !');
         } else if (!in_array($this->entity, $configs)) {
             throw new \Exception('This url is not set yet!');
         } else {
-            return \View::make('panelViews::all', array(
-             'grid'           => $this->grid,
-             'filter'         => $this->filter,
-             'title'          => $this->entity ,
-             'current_entity' => $this->entity,
-             'import_message' => (\Session::has('import_message')) ? \Session::get('import_message') : ''
+            return view('panelViews::all', array(
+                'grid' => $this->grid,
+                'filter' => $this->filter,
+                'title' => $this->entity,
+                'current_entity' => $this->entity,
+                'import_message' => (\Session::has('import_message')) ? \Session::get('import_message') : ''
             ));
         }
     }
 
     public function returnEditView()
     {
-        $configs = \Greenelf\Panel\Link::returnUrls();
+        $configs = Link::returnUrls();
 
         if (!isset($configs) || $configs == null) {
             throw new \Exception('NO URL is set yet !');
         } else if (!in_array($this->entity, $configs)) {
             throw new \Exception('This url is not set yet !');
         } else {
-           return \View::make('panelViews::edit', array('title'		 => $this->entity,
-					                'edit' 		 => $this->edit,
-							'helper_message' => $this->helper_message));
+            return view('panelViews::edit', array('title' => $this->entity,
+                'edit' => $this->edit,
+                'helper_message' => $this->helper_message));
         }
     }
 
-    public function finalizeFilter() {
-        $lang = \App::make('lang');
+    public function finalizeFilter()
+    {
+        \App::make('lang');
         $this->filter->submit($this->lang->get('panel::fields.search'));
         $this->filter->reset($this->lang->get('panel::fields.reset'));
     }
