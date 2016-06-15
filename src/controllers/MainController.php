@@ -5,9 +5,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-namespace Serverfireteam\Panel;
+namespace Greenelf\Panel;
 
-use \Serverfireteam\Panel\libs\PanelElements;
+use \Greenelf\Panel\libs\PanelElements;
 use Illuminate\Routing\Controller;
 
 class MainController extends Controller {
@@ -21,7 +21,7 @@ class MainController extends Controller {
         $urls = Link::getMainUrls();
 
         if ( in_array($entity, $urls)){
-            $controller_path = 'Serverfireteam\Panel\\'.$entity.'Controller';
+            $controller_path = 'Greenelf\Panel\\'.$entity.'Controller';
         } else {           
             $panel_path = \Config::get('panel.controllers');
             if ( isset($panel_path) ){               

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Serverfireteam\Panel\Admin;
+use Greenelf\Panel\Admin;
 
 class CreateAdminsTable extends Migration {
 

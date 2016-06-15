@@ -1,6 +1,6 @@
 <?php
 
-namespace Serverfireteam\Panel;
+namespace Greenelf\Panel;
 
 use Illuminate\Database\Eloquent\Model;
 

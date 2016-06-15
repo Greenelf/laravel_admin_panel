@@ -1,5 +1,5 @@
 <?php
-namespace Serverfireteam\Panel\libs;
+namespace Greenelf\Panel\libs;
 
 
 class dashboard
@@ -22,7 +22,7 @@ class dashboard
     {
         self::$urls = \Config::get('panel.panelControllers');
 
-        $config    = \Serverfireteam\Panel\Link::allCached();
+        $config    = \Greenelf\Panel\Link::allCached();
         $dashboard = array();
 
         $appHelper = new AppHelper();
@@ -33,7 +33,7 @@ class dashboard
     	    $modelName = $value['url'];
 
             if ( in_array($modelName, self::$urls)) {
-               $model = "Serverfireteam\\Panel\\".$modelName;
+               $model = "Greenelf\\Panel\\".$modelName;
             } else {
                $model = $appHelper->getNameSpace() . $modelName;
             }

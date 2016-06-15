@@ -1,5 +1,5 @@
 <?php
-namespace Serverfireteam\Panel;
+namespace Greenelf\Panel;
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -18,12 +18,12 @@ class LinkSeeder extends Seeder {
             Link::where('url', '=', 'Link')->update(['main' => true]);
             Link::where('url', '=', 'Admin')->update(['main' => true]);
         } else {
-            Serverfireteam\Panel\Link::create(array(
+            Greenelf\Panel\Link::create(array(
                 'display' => 'Links',
                 'url' =>  'Link',
                 'main' => true
             ));
-             Serverfireteam\Panel\Link::create(array(
+            Greenelf\Panel\Link::create(array(
                 'display' => 'Admins',
                 'url' =>  'Admin',
                 'main' => true

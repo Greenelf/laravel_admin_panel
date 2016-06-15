@@ -1,6 +1,6 @@
 <?php
 
-namespace Serverfireteam\Panel;
+namespace Greenelf\Panel;
 
 use Illuminate\Support\Facades\Session as session;
 use Illuminate\Routing\Controller;

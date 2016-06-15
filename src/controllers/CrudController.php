@@ -1,5 +1,5 @@
 <?php
-namespace Serverfireteam\Panel;
+namespace Greenelf\Panel;
 
 use Illuminate\Routing\Controller;
 
@@ -60,7 +60,7 @@ class CrudController extends Controller
         $appHelper = new libs\AppHelper;
 
         if ( in_array($entity, Link::getMainUrls()) ) {
-            $modelClass = 'Serverfireteam\\Panel\\'.$entity;
+            $modelClass = 'Greenelf\\Panel\\'.$entity;
         } else {
             $modelClass = $appHelper->getNameSpace().$this->getEntity();
         }
@@ -88,7 +88,7 @@ class CrudController extends Controller
 
     public function returnView()
     {
-        $configs = \Serverfireteam\Panel\Link::returnUrls();
+        $configs = \Greenelf\Panel\Link::returnUrls();
 
         if (!isset($configs) || $configs == null) {
             throw new \Exception('NO URL is set yet !');
@@ -107,7 +107,7 @@ class CrudController extends Controller
 
     public function returnEditView()
     {
-        $configs = \Serverfireteam\Panel\Link::returnUrls();
+        $configs = \Greenelf\Panel\Link::returnUrls();
 
         if (!isset($configs) || $configs == null) {
             throw new \Exception('NO URL is set yet !');

@@ -1,8 +1,8 @@
 <?php
 
-namespace Serverfireteam\Panel;
+namespace Greenelf\Panel;
 
-use Serverfireteam\Panel\CrudController;
+use Greenelf\Panel\CrudController;
 
 class PermissionController extends CrudController {
 

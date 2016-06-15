@@ -1,4 +1,4 @@
-<?php namespace Serverfireteam\Panel\Commands;
+<?php namespace Greenelf\Panel\Commands;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
@@ -42,7 +42,7 @@ class CrudCommand extends Command {
             
             $this->call('panel:createcontroller', ['name' => $crudName]);
             
-            $link = new \Serverfireteam\Panel\Link();
+            $link = new \Greenelf\Panel\Link();
             $link->getAndSave($crudName, $crudName . 's');
             $link->save();
             

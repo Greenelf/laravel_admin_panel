@@ -1,13 +1,13 @@
-<?php namespace Serverfireteam\Panel;
+<?php namespace Greenelf\Panel;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Translation;
-use Serverfireteam\Panel\libs;
+use Greenelf\Panel\libs;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation;
-use Serverfireteam\Panel\Commands;
+use Greenelf\Panel\Commands;
 
 class PanelServiceProvider extends ServiceProvider
 {
@@ -29,17 +29,17 @@ class PanelServiceProvider extends ServiceProvider
         $this->app->register('Barryvdh\Elfinder\ElfinderServiceProvider');
         
 
-        $this->app['router']->middleware('PanelAuth', 'Serverfireteam\Panel\libs\AuthMiddleware');
+        $this->app['router']->middleware('PanelAuth', 'Greenelf\Panel\libs\AuthMiddleware');
         
         //middleware Permission
         $this->app['router']->middleware(
-            'PermissionPanel', 'Serverfireteam\Panel\libs\PermissionCheckMiddleware'
+            'PermissionPanel', 'Greenelf\Panel\libs\PermissionCheckMiddleware'
             );
 
         // set config for Auth
 
         \Config::set('auth.guards.panel',     ['driver'   => 'session','provider' => 'panel']);
-        \Config::set('auth.providers.panel',  ['driver'   => 'eloquent','model'   => \Serverfireteam\Panel\Admin::class]);
+        \Config::set('auth.providers.panel',  ['driver'   => 'eloquent','model'   => \Greenelf\Panel\Admin::class]);
         \Config::set('auth.passwords.panel',  ['provider' => 'panel','email'      => 'panelViews::resetPassword','table' => 'password_resets','expire' => 60]);
         
         /*
@@ -52,26 +52,26 @@ class PanelServiceProvider extends ServiceProvider
 
         $this->app['panel::install'] = $this->app->share(function()
         {
-            return new \Serverfireteam\Panel\Commands\PanelCommand();
+            return new \Greenelf\Panel\Commands\PanelCommand();
         });
 
         $this->app['panel::crud'] = $this->app->share(function()
         {
-            return new \Serverfireteam\Panel\Commands\CrudCommand();
+            return new \Greenelf\Panel\Commands\CrudCommand();
         });
 
         $this->app['panel::createmodel'] = $this->app->share(function()
         {
          $fileSystem = new Filesystem(); 
 
-         return new \Serverfireteam\Panel\Commands\CreateModelCommand($fileSystem);
+         return new \Greenelf\Panel\Commands\CreateModelCommand($fileSystem);
      });
 
         $this->app['panel::createcontroller'] = $this->app->share(function()
         {
          $fileSystem = new Filesystem();
 
-         return new \Serverfireteam\Panel\Commands\CreateControllerPanelCommand($fileSystem);
+         return new \Greenelf\Panel\Commands\CreateControllerPanelCommand($fileSystem);
      });
 
         $this->commands('panel::createmodel');
@@ -83,7 +83,7 @@ class PanelServiceProvider extends ServiceProvider
         $this->commands('panel::crud');
 
         $this->publishes([
-            __DIR__ . '/../../../public' => public_path('packages/serverfireteam/panel')
+            __DIR__ . '/../../../public' => public_path('packages/greenelf/panel')
             ]);
 
         $this->publishes([
@@ -100,10 +100,10 @@ class PanelServiceProvider extends ServiceProvider
 
         include __DIR__."/../../routes.php";
 
-        $this->loadTranslationsFrom(base_path() . '/vendor/serverfireteam/panel/src/lang', 'panel');
-        $this->loadTranslationsFrom(base_path() . '/vendor/serverfireteam/rapyd-laravel/lang', 'rapyd');
+        $this->loadTranslationsFrom(base_path() . '/vendor/greenelf/panel/src/lang', 'panel');
+        $this->loadTranslationsFrom(base_path() . '/vendor/greenelf/rapyd-laravel/lang', 'rapyd');
 
-        AliasLoader::getInstance()->alias('Serverfireteam', 'Serverfireteam\Panel\Serverfireteam');
+        AliasLoader::getInstance()->alias('Greenelf', 'Greenelf\Panel\Greenelf');
 
 
     }

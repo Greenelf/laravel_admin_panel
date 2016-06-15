@@ -1,4 +1,4 @@
-<?php namespace Serverfireteam\Panel\Commands;
+<?php namespace Greenelf\Panel\Commands;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
@@ -41,9 +41,9 @@ class PanelCommand extends Command {
 
             $this->call('vendor:publish');
 
-            $this->call('migrate', array('--path' => 'vendor/serverfireteam/panel/src/database/migrations'));
+            $this->call('migrate', array('--path' => 'vendor/greenelf/panel/src/database/migrations'));
 
-            $this->call('db:seed', array('--class' => '\Serverfireteam\Panel\LinkSeeder'));
+            $this->call('db:seed', array('--class' => '\Greenelf\Panel\LinkSeeder'));
 	}
 
 	/**
