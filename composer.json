@@ -25,7 +25,7 @@
   	        "src/Serverfireteam/Panel/Commands"
         ],
         "psr-0": {
-            "Serverfireteam\\Panel": "src/"
+            "Greenelf\\Panel": "src/"
         }
     },
     "minimum-stability": "dev"
