@@ -22,7 +22,7 @@
             "src/views",
             "src/models",
             "src/database/migrations",
-  	        "src/Serverfireteam/Panel/Commands"
+  	        "src/Greenelf/Panel/Commands"
         ],
         "psr-0": {
             "Greenelf\\Panel": "src/"
