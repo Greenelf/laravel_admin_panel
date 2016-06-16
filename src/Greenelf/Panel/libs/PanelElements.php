@@ -10,6 +10,7 @@ return array(
        'Admin' ,
         'Link' ,
         'Permission',
-        'Role'
+        'Role',
+        'RolePermission'
     ),    
 );

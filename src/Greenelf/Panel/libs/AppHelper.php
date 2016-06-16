@@ -10,7 +10,9 @@ namespace Greenelf\Panel\libs;
 class AppHelper {
     use \Illuminate\Console\AppNamespaceDetectorTrait;
 
+
     public function getNameSpace(){
+
         return $this->getAppNamespace();
     }
 

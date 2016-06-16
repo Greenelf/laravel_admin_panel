@@ -34,7 +34,7 @@ class CrudCommand extends Command {
 	public function fire()
 	{
        
-            $this->info('            [ ServerFireTeam Panel Crud Generator ]       ');
+            $this->info('            [ GreenElf Panel Crud Generator ]       ');
 
             $crudName = $this->argument('name');
             

@@ -2,6 +2,9 @@
 namespace Greenelf\Panel\libs;
 
 
+use Greenelf\Panel\Role;
+use Greenelf\Panel\RolePermission;
+
 class dashboard
 {
 
@@ -26,7 +29,7 @@ class dashboard
         $dashboard = array();
 
         $appHelper = new AppHelper();
-
+        $test = new RolePermission();
         // Make Dashboard Items
         foreach ($config as $value) {
 
