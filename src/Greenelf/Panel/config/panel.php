@@ -14,7 +14,8 @@ return array(
        'Admin',
        'Permission',  
        'Role',  
-       'Link'
+       'Link',
+        'RolePermission',
     ),
     'logo'=>'packages/greenelf/panel/img/logo.png' // logo of Panel
     

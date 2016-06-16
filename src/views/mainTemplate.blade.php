@@ -3,7 +3,7 @@
 @section('body')
     <?php
         $urls = \Config::get('panel.panelControllers');
-        $linkItems  = \Serverfireteam\Panel\libs\dashboard::getItems();
+        $linkItems  = \Greenelf\Panel\libs\dashboard::getItems();
     ?>
 
     <div class="loading">

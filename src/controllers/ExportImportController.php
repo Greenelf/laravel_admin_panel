@@ -9,12 +9,22 @@ class ExportImportController extends Controller
 {
     protected $failed = false;
 
+    private function getClass($entity){
+        $urls = \Config::get('panel.panelControllers');
+
+        if (in_array($entity, $urls)) {
+            $className = "Greenelf\\Panel\\" . $entity;
+        } else {
+            $appHelper = new libs\AppHelper();
+            $className = $appHelper->getNameSpace() . $entity;
+        }
+        return $className;
+    }
+
     public function export($entity, $fileType)
     {
-        $appHelper = new libs\AppHelper();
-
-        $className = $appHelper->getNameSpace() . $entity;
-        $data = $className::get();
+        $className = $this->getClass($entity);
+        $data = $className::all();
         if (strcmp($fileType, "excel") == 0) {
             \App::make('Excel');
             \Excel::create($entity, function ($excel) use ($data) {
@@ -27,9 +37,7 @@ class ExportImportController extends Controller
 
     public function import($entity)
     {
-        $appHelper = new libs\AppHelper();
-
-        $className = $appHelper->getNameSpace() . $entity;
+        $className = $this->getClass($entity);
         $model = new $className;
         $table = $model->getTable();
         $columns = \Schema::getColumnListing($table);

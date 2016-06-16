@@ -35,7 +35,7 @@ class PanelCommand extends Command {
 	 */
 	public function fire()
 	{
-            $this->info('        [ Welcome to ServerFireTeam Panel Installation ]       ');
+            $this->info('        [ Welcome to GreenElf Panel Installation ]       ');
 
 	    $this->call('elfinder:publish');
 

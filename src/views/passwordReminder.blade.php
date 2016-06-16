@@ -21,7 +21,7 @@ login
                         </div>
                         <div class="panel-body">
                             <div class="logo-holder">
-                                <img src="{{asset("packages/serverfireteam/panel/img/logo.png")}}" />
+                                <img src="{{asset("packages/greenelf/panel/img/logo.png")}}" />
                             </div>
                             <form action="{!! url('panel/remind') !!}" method="POST">
 				<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />

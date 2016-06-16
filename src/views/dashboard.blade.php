@@ -12,8 +12,8 @@
             <!-- /.row -->
             <div class="row box-holder">
                 
-                @if(is_array(\Serverfireteam\Panel\Link::returnUrls()))
-                    @foreach (Serverfireteam\Panel\libs\dashboard::getItems() as $box)
+                @if(is_array(\Greenelf\Panel\Link::returnUrls()))
+                    @foreach (Greenelf\Panel\libs\dashboard::getItems() as $box)
                     <div class="col-lg-3 col-md-6">
                         <div class="panel ">
                             <div class="panel-heading">
