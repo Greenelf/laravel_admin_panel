@@ -41,7 +41,7 @@
 
     <!-- jQuery Version 1.11.0 -->
     <script src="{{asset("packages/greenelf/panel/js/jquery-1.11.0.js")}}"></script>
-
+    <script src="{{asset("packages/greenelf/panel/js/plugins/metisMenu/metisMenu.min.js")}}"></script>
 </head>
 
 <body class="@yield('bodyClass')">

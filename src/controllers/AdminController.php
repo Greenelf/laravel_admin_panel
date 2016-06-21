@@ -42,9 +42,9 @@ class AdminController extends CrudController
 
     public function  edit($entity)
     {
-        if (Request::input('password') != null) {
+        if (\Request::input('password') != null) {
             $new_input = array('password' => \Hash::make(\Request::input('password')));
-            Request::merge($new_input);
+            \Request::merge($new_input);
         }
 
         parent::edit($entity);

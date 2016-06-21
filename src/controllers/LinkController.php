@@ -31,10 +31,10 @@ class LinkController extends CrudController
 
         $this->edit = \DataEdit::source(new Link());
 
-        Link::creating(function ($link) {
+       /* Link::creating(function ($link) {
             $appHelper = new libs\AppHelper();
             return (class_exists($appHelper->getNameSpace() . $link['url']));
-        });
+        });*/
 
         $helpMessage = \Lang::get('panel::fields.links_help');
 
@@ -42,11 +42,16 @@ class LinkController extends CrudController
         $this->edit->link("rapyd-demo/filter", "Articles", "TR")->back();
         $this->edit->add('display', 'Display', 'text')->rule('required');
         $this->edit->add('url', 'link', 'text')->rule('required');
+        $this->edit->add('type', 'Type', 'radiogroup')
+            ->option('model', 'Model')->option('controller', 'Controller');
+        $this->edit->add('parent_id', 'Parent ID', 'text')->rule('required');
+        //$this->edit->add('parent_id','Parent menu','select')->insertValue(0)->options(\Greenelf\Panel\Link::lists("display", "id")->all());
+        //$this->edit->add('parent_id', 'Parent menu', 'text');
 
-        $this->edit->saved(function () use ($entity) {
+        /*$this->edit->saved(function () use ($entity) {
             $this->edit->message(\Lang::get('panel::fields.dataSavedSuccessfull'));
             $this->edit->link('panel/Permission/all', \Lang::get('panel::fields.back'));
-        });
+        });*/
         $this->addHelperMessage($helpMessage);
 
         return $this->returnEditView();

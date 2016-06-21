@@ -6,24 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class RolePermission extends Model
 {
-    /**
-     * A role may be given various permissions.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function permissions()
-    {
-     //   return $this->belongsToMany(Permission::class);
-    }
+    protected $table = 'permission_role';
 
-    /**
-     * Grant the given permission to a role.
-     *
-     * @param  Permission $permission
-     * @return mixed
-     */
-    public function givePermissionTo(RolePermission $permission)
-    {
-       // return $this->permissions()->save($permission);
+    protected $fillable = ['permission_id', 'role_id', 'read', 'create', 'update', 'delete'];
+
+    //protected $primaryKey = 'role_id';
+
+    //public $incrementing = false;
+
+    public $timestamps = false;
+
+    public function permission(){
+        return $this->belongsTo(Permission::class, 'permission_id', 'id');
     }
 }

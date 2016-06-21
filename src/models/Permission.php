@@ -19,6 +19,10 @@ class Permission extends Model
     	return $this->belongsToMany(Role::class);
     }
 
+    public function menuLink(){
+        return $this->belongsTo(Link::class, 'link_id');
+    }
+
     public function getAndSave($url, $label){
     	$this->name = $name;
     	$this->label = $label;

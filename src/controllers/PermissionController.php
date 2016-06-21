@@ -17,7 +17,7 @@ class PermissionController extends CrudController
 
         $this->grid = \DataGrid::source($this->filter);
         $this->grid->add('id', 'ID', true)->style("width:100px");
-        $this->grid->add('name', 'Url')->style('width:100px');
+        $this->grid->add('name', 'UrlModelAccess')->style('width:100px');
         $this->grid->add('label', 'Description');
 
         $this->addStylesToGrid();
@@ -37,6 +37,8 @@ class PermissionController extends CrudController
         $this->edit->link("rapyd-demo/filter", "Articles", "TR")->back();
         $this->edit->add('name', 'Url', 'text')->rule('required');
         $this->edit->add('label', 'Description', 'text')->rule('required');
+        $this->edit->add('label', 'Description', 'text')->rule('required');
+        $this->edit->add('link_id','Menu','select')->insertValue(1)->options(\Greenelf\Panel\Link::lists("url", "id")->all());  // pre-select a value in a select box
 
         $this->edit->saved(function () use ($entity) {
             $this->edit->message(\Lang::get('panel::fields.dataSavedSuccessfull'));

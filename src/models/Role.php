@@ -26,4 +26,12 @@ class Role extends Model
     {
         return $this->permissions()->save($permission);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function permissionAccess(){
+        return $this->hasMany(RolePermission::class, 'role_id', 'id');
+    }
+
 }

@@ -16,7 +16,7 @@ class MainController extends Controller
     {
         $appHelper = new libs\AppHelper();
 
-        $urls = Link::getMainUrls();
+        $urls = Link::getModelUrls();
 
         if (in_array($entity, $urls)) {
             $controller_path = 'Greenelf\Panel\\' . $entity . 'Controller';
