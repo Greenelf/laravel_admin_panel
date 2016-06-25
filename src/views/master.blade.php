@@ -20,6 +20,8 @@
     <title>{{isset($title) ? $title : 'Panel'}}</title>
     <!-- compiled styles -->
 
+    <link href="{{asset("/packages/greenelf/panel/font-awesome-4.6.3/css/font-awesome.min.css")}}" rel="stylesheet" type="text/css">
+    <!-- font-awesome -->
 
     <link href="{{asset("packages/greenelf/panel/css/styles.css")}}" rel="stylesheet" type="text/css">
     <link href="{{asset("packages/greenelf/panel/font-icon/icomoon/style.css")}}" rel="stylesheet" type="text/css">
