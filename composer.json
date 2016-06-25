@@ -14,7 +14,7 @@
         "illuminate/support": "~5.1",
         "greenelf/rapyd-laravel" : "dev-master",
         "maatwebsite/excel": "~2.0.0",
-	"barryvdh/laravel-elfinder": "0.3.*"
+	    "barryvdh/laravel-elfinder": "0.3.*"
     },
     "autoload": {
         "classmap": [
