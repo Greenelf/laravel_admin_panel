@@ -92,7 +92,7 @@
             });
 
         </script>
-        <div class="powered-by"><a href="http://laravelpanel.com">{{ \Lang::get('panel::fields.thankYouNote') }}</a>
+        <div class="powered-by"><a href="https://github.com/Greenelf/laravel_admin_panel">{{ \Lang::get('panel::fields.thankYouNote') }}</a>
         </div>
         <div id="page-wrapper">
 
