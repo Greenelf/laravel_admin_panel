@@ -1,34 +1,30 @@
 <?php
 
-Route::group(array('prefix' => 'panel', 'middleware' => ['web','PanelAuth']), function()
-{
-	// main page for the admin section (app/views/admin/dashboard.blade.php)
+Route::group(array('prefix' => 'panel', 'middleware' => ['web', 'PanelAuth']), function () {
+    // main page for the admin section (app/views/admin/dashboard.blade.php)
 
-	Route::get('/', function(){
-
-
-        $version = '';
-        try
-        {
-            $composer_lock = json_decode(File::get(base_path().'/composer.lock'),true);
-            foreach($composer_lock['packages'] as $key=>$value){
-                if($value['name'] =="greenelf/panel")
-                    $version =  $value['version'];
-            }
+    Route::get('/', ['as' => 'test', function () {
+        if (Route::has('CustomDashboard')) {
+            return redirect()->route('CustomDashboard');
         }
-        catch (Exception $exception)
-        {
+        $version = '';
+        try {
+            $composer_lock = json_decode(File::get(base_path() . '/composer.lock'), true);
+            foreach ($composer_lock['packages'] as $key => $value) {
+                if ($value['name'] == "greenelf/panel")
+                    $version = $value['version'];
+            }
+        } catch (Exception $exception) {
             \Log::warning("I can't found composer.lock for laravelpanel ");
         }
 
         return View::make('panelViews::dashboard')->with('version', $version);
-    });
+    }]);
 
-/**
- * Check Permission only on Model Controllers
- */
-    Route::group(array('middleware' => ['PermissionPanel']), function()
-    {
+    /**
+     * Check Permission only on Model Controllers
+     */
+    Route::group(array('middleware' => ['PermissionPanel']), function () {
 
         Route::any('/{entity}/export/{type}', array('uses' => 'Greenelf\Panel\ExportImportController@export'));
         Route::post('/{entity}/import', array('uses' => 'Greenelf\Panel\ExportImportController@import'));
@@ -39,18 +35,17 @@ Route::group(array('prefix' => 'panel', 'middleware' => ['web','PanelAuth']), fu
     });
 
 
-/**
- * Admin userPassword change
- */
+    /**
+     * Admin userPassword change
+     */
     Route::get('/changePassword', array('uses' => 'Greenelf\Panel\RemindersController@getChangePassword'));
 
     Route::post('/changePassword', array('uses' => 'Greenelf\Panel\RemindersController@postChangePassword'));
 });
-Route::group(array('middleware' => ['web']), function()
-{
+Route::group(array('middleware' => ['web']), function () {
     Route::post('/panel/login', array('uses' => 'Greenelf\Panel\AuthController@postLogin'));
 
-    Route::get('/panel/password/reset/{token}', function ($token){
+    Route::get('/panel/password/reset/{token}', function ($token) {
         return View::make('panelViews::passwordReset')->with('token', $token);
     });
 
@@ -60,14 +55,13 @@ Route::group(array('middleware' => ['web']), function()
 
     Route::get('/panel/reset', array('uses' => 'Greenelf\Panel\RemindersController@getReset'));
 
-    Route::get('/panel/remind',  array('uses' => 'Greenelf\Panel\RemindersController@getRemind'));
+    Route::get('/panel/remind', array('uses' => 'Greenelf\Panel\RemindersController@getRemind'));
 
     Route::post('/panel/remind', array('uses' => 'Greenelf\Panel\RemindersController@postRemind'));
 
-    Route::get('/panel/login',  array('uses' => 'Greenelf\Panel\AuthController@getLogin'));
+    Route::get('/panel/login', array('uses' => 'Greenelf\Panel\AuthController@getLogin'));
 });
 
-Route::group(array('prefix' => 'elfinder', 'middleware' => ['web','PanelAuth']), function()
-{
-	Route::get('tinymce4/{input_id}', array('uses' => 'Barryvdh\Elfinder\ElfinderController@showPopup'));
+Route::group(array('prefix' => 'elfinder', 'middleware' => ['web', 'PanelAuth']), function () {
+    Route::get('tinymce4/{input_id}', array('uses' => 'Barryvdh\Elfinder\ElfinderController@showPopup'));
 });
