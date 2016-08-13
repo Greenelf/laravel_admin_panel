@@ -44,28 +44,7 @@
             </div>
             <div class="row hide update">
                 <div class="alert alert-warning" role="alert">
-                    <a href="http://laravelpanel.com/docs/master/update" class="alert-link"></a>
+                    <a href="https://github.com/Greenelf/laravel_admin_panel" class="alert-link"></a>
                 </div>
             </div>
-
-<script>
-    $(function(){
-        var color = ['primary','green','orange','red','purple','green2','blue2','yellow'];
-        var pointer = 0;
-        $('.panel').each(function(){
-            if(pointer > color.length) pointer = 0;
-            $(this).addClass('panel-'+color[pointer]);
-            $(this).find('.pull-right .add').addClass('panel-'+color[pointer]);
-            pointer++;
-        })
-        // check for update of laravelpanel 
-        $.getJSON( "http://api.laravelpanel.com/checkupdate/{{ $version }}", function( data ) {
-          if(data.needUpdate){
-            $(".update a").text(data.text);
-            $(".update").removeClass('hide');
-          }
-        })
-        
-    })
-</script>
 @stop            

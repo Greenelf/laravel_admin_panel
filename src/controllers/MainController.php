@@ -8,31 +8,41 @@
 namespace Greenelf\Panel;
 
 use Greenelf\Panel\libs\PanelElements;
+use Illuminate\Container\Container;
+use Illuminate\Foundation\Application;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\ClassLoader;
+use Illuminate\Support\Facades\App;
+use Psy\Autoloader;
+use Symfony\Component\Finder\Finder;
+
 
 class MainController extends Controller
 {
     public function entityUrl($entity, $methods)
     {
-        $appHelper = new libs\AppHelper();
+        //TODO for delete
+        //$appHelper = new libs\AppHelper();
 
         $urls = Link::getModelUrls();
 
         if (in_array($entity, $urls)) {
-            $controller_path = 'Greenelf\Panel\\' . $entity . 'Controller';
+            $nameSpace = 'Greenelf\Panel\\' . $entity . 'Controller';
         } else {
-            $panel_path = \Config::get('panel.controllers');
-            if (isset($panel_path)) {
-                $controller_path = '\\' . $panel_path . '\\' . $entity . 'Controller';
-            } else {
-                $controller_path = $appHelper->getNameSpace() . 'Http\Controllers\\' . $entity . 'Controller';
+            $finder = new Finder();
+            $files = $finder->files()->name($entity . "Controller.php")->in(App::basePath() . '/app');
+            foreach ($files as $item) {
+                $fileContent = $item->getContents();
+                $nameSpace = $this->getNameSpace($fileContent) . "\\" . $entity . "Controller";
             }
+            //TODO for delete
+            //$controller_path = $appHelper->getNameSpace() . 'Http\Controllers\\' . $entity . 'Controller';
         }
 
         try {
-            $controller = \App::make($controller_path);
+            $controller = \App::make($nameSpace);
         } catch (\Exception $ex) {
-            throw new \Exception("Can not found the Controller ( $controller_path ) ");
+            throw new \Exception("Can not found the Controller ( $nameSpace ) ");
         }
 
         if (!method_exists($controller, $methods)) {
@@ -40,6 +50,18 @@ class MainController extends Controller
         } else {
             return $controller->callAction($methods, array('entity' => $entity));
         }
+    }
+
+    /**
+     * @param $fileContent
+     * @return null or string $nameSpace
+     */
+    private function getNameSpace($fileContent)
+    {
+        if (preg_match('#^namespace\s+(.+?);$#sm', $fileContent, $m)) {
+            return $m[1];
+        }
+        return null;
     }
 }
 

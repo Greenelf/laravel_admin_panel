@@ -12,7 +12,6 @@ class AppHelper {
 
 
     public function getNameSpace(){
-
         return $this->getAppNamespace();
     }
 

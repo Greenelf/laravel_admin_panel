@@ -2,6 +2,8 @@
 namespace Greenelf\Panel;
 
 use Illuminate\Routing\Controller;
+use Symfony\Component\Finder\Finder;
+use Illuminate\Support\Facades\App;
 
 class CrudController extends Controller
 {
@@ -56,13 +58,20 @@ class CrudController extends Controller
     public function getEntityModel()
     {
         $entity = $this->getEntity();
-
-        $appHelper = new libs\AppHelper;
+        //TODO for delete
+        //$appHelper = new libs\AppHelper;
 
         if (in_array($entity, Link::getMainUrls())) {
             $modelClass = 'Greenelf\\Panel\\' . $entity;
         } else {
-            $modelClass = $appHelper->getNameSpace() . $this->getEntity();
+            $finder = new Finder();
+            $files = $finder->files()->name($entity . ".php")->in(App::basePath() . '/app');
+            foreach ($files as $item) {
+                $fileContent = $item->getContents();
+                $modelClass = $this->getNameSpace($fileContent) . "\\" . $entity;
+            }
+            //TODO for delete
+            //$modelClass = $appHelper->getNameSpace() . $this->getEntity();
         }
 
         return new $modelClass;
@@ -125,5 +134,17 @@ class CrudController extends Controller
         \App::make('lang');
         $this->filter->submit($this->lang->get('panel::fields.search'));
         $this->filter->reset($this->lang->get('panel::fields.reset'));
+    }
+
+    /**
+     * @param $fileContent
+     * @return null or string $nameSpace
+     */
+    private function getNameSpace($fileContent)
+    {
+        if (preg_match('#^namespace\s+(.+?);$#sm', $fileContent, $m)) {
+            return $m[1];
+        }
+        return null;
     }
 }
