@@ -21,7 +21,118 @@ class dashboard
         return self::$dashboardItems;
     }
 
+    private $menuItems;
+    private $currentPath;
 
+    private function getPartUrl(&$menuItem)
+    {
+        switch($menuItem->type){
+            case 'model':
+                return $menuItem->model;
+            case 'controller':
+                return $menuItem->controller;
+            default:
+                return $menuItem->model;
+        }
+    }
+
+    private function getMainItems()
+    {
+        $menuItems = $this->menuItems;
+        $mainMenuItems = $menuItems->filter(function ($item) {
+            return $item->parent_id == 0;
+        });
+        return $mainMenuItems;
+    }
+
+    private function getChildmenuItems($parentID)
+    {
+        $menuItems = $this->menuItems;
+        $childMenuItems = $menuItems->where('parent_id', $parentID);
+        $childItems = [];
+        foreach ($childMenuItems as $menuItem){
+            $childItems[] = $this->addMenuItem($menuItem);
+        }
+        return $childItems;
+    }
+
+    private function addMenuItem(&$menuItem)
+    {
+        $childMenus = $this->getChildmenuItems($menuItem->id);
+        $isActive = $this->isActive($menuItem);
+        return [
+            'modelName' => $menuItem->model,
+            'title' => $menuItem->display,
+            'count' => 10,
+            'showListUrl' => $this->setShowListUrl($menuItem),
+            'addUrl' => $this->setEditUrl($menuItem),
+            'id' => $menuItem->id,
+            'childMenus' => $childMenus,
+            'parent_id' => $menuItem->parent_id,
+            'isActive' => $isActive,
+            'icon' => $menuItem->icon
+        ];
+    }
+
+    private function setShowListUrl(&$menuItem)
+    {
+        $partUrl = $this->getPartUrl($menuItem);
+        return 'panel/' . $partUrl . '/all';
+    }
+
+    private function setEditUrl(&$menuItem)
+    {
+        $partUrl = $this->getPartUrl($menuItem);
+        return 'panel/' . $partUrl . '/edit';
+    }
+
+    private function isActive(&$menuItem)
+    {
+        if($menuItem->parent_id == 0){
+            return $this->isActiveMainMenu($menuItem->id);
+        }else{
+            return $this->isActiveMenu($menuItem);
+        }
+    }
+
+    private function isActiveMainMenu($parentID)
+    {
+        $childMenus = $this->menuItems->where('parent_id', $parentID);
+
+        foreach ($childMenus as $item){
+            if($this->isActiveMenu($item)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function isActiveMenu(&$menuItem)
+    {
+        $showListUrl = $this->setShowListUrl($menuItem);
+        $editUrl = $this->setEditUrl($menuItem);
+        $path = $this->currentPath;
+        if($showListUrl == $path
+            or $editUrl == $path){
+            return true;
+        }
+        return false;
+    }
+
+    public function getMenuUrls($path)
+    {
+        $menuItems = \Greenelf\Panel\Link::all();
+        $this->menuItems = $menuItems;
+        $this->currentPath = $path;
+        $mainMenuItems = $this->getMainItems();
+        foreach ($mainMenuItems as $menuItem){
+            $mainMenuItemsUrls[] = $this->addMenuItem($menuItem);
+        }
+
+        return $mainMenuItemsUrls;
+    }
+    //TODO remove
+/*
     public static function create($url)
     {
         //dd($url);
@@ -137,4 +248,5 @@ class dashboard
         }
         return $childItems;
     }
+    */
 }
