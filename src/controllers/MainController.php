@@ -24,9 +24,10 @@ class MainController extends Controller
         //TODO for delete
         //$appHelper = new libs\AppHelper();
 
-        $urls = Link::getModelUrls();
+        //$urls = Link::getModelUrls();
+        $panelUrls = Link::getPanelModels();
 
-        if (in_array($entity, $urls)) {
+        if (in_array($entity, $panelUrls)) {
             $nameSpace = 'Greenelf\Panel\\' . $entity . 'Controller';
         } else {
             $finder = new Finder();

@@ -18,7 +18,14 @@ class LinkController extends CrudController
         $this->grid = \DataGrid::source($this->filter);
         $this->grid->add('id', 'ID', true)->style("width:100px");
         $this->grid->add('display', 'Display');
-        $this->grid->add('url', 'Model');
+        $this->grid->add('url', 'Url');
+        $this->grid->add('type', 'Type');
+        $this->grid->add('model', 'Model');
+        $this->grid->add('conroller', 'Controller');
+        $this->grid->add('is_panel_field', 'Panel field');
+        $this->grid->add('icon', 'Icon');
+        $this->grid->add('created_at', 'Created');
+        $this->grid->add('updated_at', 'Updated');
 
         $this->addStylesToGrid();
 
@@ -37,10 +44,14 @@ class LinkController extends CrudController
         $this->edit->link("rapyd-demo/filter", "Articles", "TR")->back();
         $this->edit->add('display', 'Display', 'text')->rule('required');
         $this->edit->add('url', 'link', 'text')->rule('required');
+        $this->edit->add('model', 'Model', 'text')->rule('required');
+        $this->edit->add('controller', 'Controller', 'text')->rule('required');
         $this->edit->add('type', 'Type', 'radiogroup')
             ->option('model', 'Model')->option('controller', 'Controller');
-        $this->edit->add('parent_id', 'Parent ID', 'text')->rule('required');
-        $this->edit->add('parent_id','Parent menu','select')->options(Link::lists("display", "id")->all());
+        $this->edit->add('parent_id','Parent menu','select')
+            ->options(Link::lists("display", "id")->all());
+        $this->edit->add('is_panel_field', 'Is panel field?', 'checkbox');
+        $this->edit->add('icon', 'FontAvesome class icon', 'text');
 
         $this->addHelperMessage($helpMessage);
 

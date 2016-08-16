@@ -102,6 +102,13 @@ class Link extends Model
         return self::$cache['main_urls'];
     }
 
+    public static function getPanelModels()
+    {
+        $panelUrls = Link::where('is_panel_field', '=', 1)->get();
+        $panelUrls = $panelUrls->pluck('url')->toArray();
+        return $panelUrls;
+    }
+
     public static function getModelUrls($forceRefresh = false)
     {
 

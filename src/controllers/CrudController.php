@@ -16,6 +16,7 @@ class CrudController extends Controller
     public $filter;
     protected $lang;
     public $helper_message;
+    private $model;
 
     public function __construct(\Lang $lang)
     {
@@ -34,7 +35,7 @@ class CrudController extends Controller
      */
     public function all($entity)
     {
-        //$this->addStylesToGrid();
+        $this->setModel($entity);
     }
 
     /**
@@ -61,20 +62,37 @@ class CrudController extends Controller
         //TODO for delete
         //$appHelper = new libs\AppHelper;
 
-        if (in_array($entity, Link::getMainUrls())) {
+        if (in_array($entity, Link::getPanelModels())) {
             $modelClass = 'Greenelf\\Panel\\' . $entity;
         } else {
-            $finder = new Finder();
-            $files = $finder->files()->name($entity . ".php")->in(App::basePath() . '/app');
-            foreach ($files as $item) {
-                $fileContent = $item->getContents();
-                $modelClass = $this->getNameSpace($fileContent) . "\\" . $entity;
-            }
+            $modelClass = $this->findModel($entity);
             //TODO for delete
             //$modelClass = $appHelper->getNameSpace() . $this->getEntity();
         }
 
+        if(!$modelClass){
+            $modelClass = $this->model;
+        }
+
         return new $modelClass;
+    }
+
+    private function findModel($modelName)
+    {
+        $finder = new Finder();
+        $files = $finder->files()->name($modelName . ".php")->in(App::basePath() . '/app');
+        foreach ($files as $item) {
+            $fileContent = $item->getContents();
+            return $modelClass = $this->getNameSpace($fileContent) . "\\" . $modelName;
+        }
+        return false;
+    }
+
+    public function setModel($modelName)
+    {
+        $model = $this->findModel($modelName);
+        $this->model = $model;
+        return $model;
     }
 
     public function addStylesToGrid($orderByColumn = self::ID_COLUMN, $paginateCount = 10)

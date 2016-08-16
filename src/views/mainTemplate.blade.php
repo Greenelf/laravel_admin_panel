@@ -3,9 +3,9 @@
 @section('body')
     <?php
     $urls = \Config::get('panel.panelControllers');
-    //$linkItems = \Greenelf\Panel\libs\dashboard::getItems();
-    $linkItems = \Greenelf\Panel\libs\dashboard::create(Request::path());
-
+    $dashboard = new \Greenelf\Panel\libs\dashboard();
+    $linkItems = $dashboard->getMenuUrls(Request::path());
+    //$linkItems = \Greenelf\Panel\libs\dashboard::create(Request::path());
     ?>
 
     <div class="loading">
@@ -21,6 +21,7 @@
 
     <div id="wrapper">
         <!-- Navigation -->
+
         <nav class="navbar navbar-default navbar-static-top " role="navigation" style="margin-bottom: 0">
 
             <!-- /.navbar-header -->
@@ -35,60 +36,76 @@
 
             </div>
 
-
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar " role="navigation">
                 <div class="sidebar-nav navbar-collapse collapse " id="bs-example-navbar-collapse-1">
-                    <!--<div class="grav center"><img src="http://www.gravatar.com/avatar/{{ md5( strtolower( trim( Auth::guard('panel')->user()->email ) ) )}}?d=mm&s=128" ><a href="https://www.gravatar.com"><span> {{ \Lang::get('panel::fields.change') }}</span></a></div>-->
-                    <div class="">Money24<a href="#"></a></div>
+                <!--<div class="grav center"><img src="http://www.gravatar.com/avatar/{{ md5( strtolower( trim( Auth::guard('panel')->user()->email ) ) )}}?d=mm&s=128" ><a href="https://www.gravatar.com"><span> {{ \Lang::get('panel::fields.change') }}</span></a></div>-->
+                    <div class="panel-logo"><a href="{{$app['url']->to('/')}}" title="{{ \Lang::get('panel::fields.visiteSite') }}"><img src="/img/panel-logo.gif" alt="Money24"></a></div>
                     <div class="user-info">{{Auth::guard('panel')->user()->first_name.' '.Auth::guard('panel')->user()->last_name}}</div>
                     <a class="visit-site"
-                       href="{{$app['url']->to('/')}}">{{ \Lang::get('panel::fields.visiteSite') }}  </a>
-                    <ul class="nav nav-stacked" id="sidebar_menu">
-                        @foreach($linkItems as $linkItem)
-                            <?php
-                            //$isActive = Request::segment(2) == $linkItem['modelName'];
-                            //dd(url($linkItem['showListUrl']));
-                            //$isActive = Request::url() == url($linkItem['showListUrl']);
-                            ?>
-                            <li class="{{ $linkItem['active'] }}" id="{{$linkItem['id']}}">
-                                <a href="{{ url($linkItem['showListUrl']) }}">
-                                    <i class="fa fa-edit fa-fw"></i>
-                                    {{{$linkItem['title']}}}
-                                </a>
-                                {{--<span class="badge {{App::getLocale() == 'fa' ? 'pull-left' : 'pull-right'}}">{!!$linkItem['count']!!}</span>--}}
-                                @if($linkItem['childMenus'] != '')
-                                    <ul class="child_items">
-                                        @foreach($linkItem['childMenus'] as $childItem)
-                                            <?php
-                                            // dd($childItem);
-                                            //$isActive = Request::segment(2) == $childItem['modelName'];
-                                            //$isActive = Request::url() == url($childItem['showListUrl']);
-                                            ?>
-                                            <li class="{{ $childItem['active'] }}"
-                                                parent_id="{{$childItem['parent_id']}}">
-                                                <a href="{{ url($childItem['showListUrl']) }}">
-                                                    <i class="fa fa-edit fa-fw"></i>
-                                                    {{{$childItem['title']}}}
-                                                </a>
-                                                {{-- <span class="badge {{App::getLocale() == 'fa' ? 'pull-left' : 'pull-right'}}">{!!$childItem['count']!!}</span>--}}
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                @endif
+                       href="{{route('CustomDashboard')}}">Главная панель</a>
+
+
+                    <ul class="nav navbar-nav side-nav left-menu">
+                    @foreach($linkItems as $item)
+                        <!--<li>
+                                <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                             </li>
+                            <li>
+                                <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
+                            </li>
+                            <li>
+                                <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
+                            </li>
+                            <li class="active">
+                                <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
+                            </li>
+                            <li>
+                                <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
+                            </li>
+                            <li>
+                                <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
+                            </li>-->
+                            <li>
+                                <a href="javascript:;" data-toggle="collapse" data-target="#menu{{$item['id']}}" class="" aria-expanded="true"><i class="fa fa-fw fa-arrows-v"></i> {{$item['title']}} <i class="fa fa-fw fa-caret-down"></i></a>
+                                <ul
+                                        id="menu{{$item['id']}}"
+                                        @if($item['isActive'])
+                                        class="collapse in active"
+                                        @else
+                                        class="collapse"
+                                        @endif
+                                        aria-expanded="true"
+                                >
+                                    @foreach($item['childMenus'] as $childItem)
+                                        <li
+                                                @if($childItem['isActive'])
+                                                class="active"
+                                                @endif
+                                        >
+                                            <a href="{{asset($childItem['showListUrl'])}}">{{$childItem['title']}}</a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                            <!--
+                            <li>
+                                <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
+                            </li>
+                            <li>
+                                <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
+                            </li>-->
                         @endforeach
                     </ul>
                 </div>
-
 
             </div>
             <!-- /.navbar-static-side -->
         </nav>
         <script>
             $(function () {
-                  $('#sidebar_menu').metisMenu({ doubleTapToGo: true });
+                $('#sidebar_menu').metisMenu({ doubleTapToGo: true });
             });
 
         </script>
