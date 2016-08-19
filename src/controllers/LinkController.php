@@ -21,7 +21,7 @@ class LinkController extends CrudController
         $this->grid->add('url', 'Url');
         $this->grid->add('type', 'Type');
         $this->grid->add('model', 'Model');
-        $this->grid->add('conroller', 'Controller');
+        $this->grid->add('controller', 'Controller');
         $this->grid->add('is_panel_field', 'Panel field');
         $this->grid->add('icon', 'Icon');
         $this->grid->add('created_at', 'Created');
