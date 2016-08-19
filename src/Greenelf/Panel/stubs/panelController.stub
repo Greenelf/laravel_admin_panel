@@ -18,9 +18,9 @@ class DummyClass extends CrudController{
 
 			$this->filter = \DataFilter::source(new \App\Category);
 			$this->filter->add('name', 'Name', 'text');
-			$this->filter->submit('search');
-			$this->filter->reset('reset');
-			$this->filter->build();
+			$this->filter->submit(\Lang::get('panel::fields.search'));
+            $this->filter->reset(\Lang::get('panel::fields.reset'));
+            $this->filter->build();
 
 			$this->grid = \DataGrid::source($this->filter);
 			$this->grid->add('name', 'Name');
@@ -37,18 +37,13 @@ class DummyClass extends CrudController{
         parent::edit($entity);
 
         /* Simple code of  edit part , List of all fields here : http://laravelpanel.com/docs/master/crud-fields
-	
+
 			$this->edit = \DataEdit::source(new \App\Category());
-
 			$this->edit->label('Edit Category');
-
 			$this->edit->add('name', 'Name', 'text');
-		
 			$this->edit->add('code', 'Code', 'text')->rule('required');
-
-
         */
-       
+
         return $this->returnEditView();
     }    
 }
