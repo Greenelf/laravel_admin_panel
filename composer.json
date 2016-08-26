@@ -1,0 +1,33 @@
+{
+    "name": "greenelf/panel",
+    "description": "Admin panel for Laravel 5.2",
+    "keywords": ["LaravelPanel","Laravel", "Panel", "Crud", "Admin Panel","CMS","administrator", "admin", "backend"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Greenelf",
+            "email": "alexandr.cctv@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",        
+        "illuminate/support": "~5.1",
+        "greenelf/rapyd-laravel" : "dev-master",
+        "maatwebsite/excel": "~2.0.0",
+	    "barryvdh/laravel-elfinder": "0.3.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/controllers",
+            "src/views",
+            "src/models",
+            "src/database/migrations",
+  	        "src/Greenelf/Panel/Commands"
+        ],
+        "psr-0": {
+            "Greenelf\\Panel": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+    
+}
