@@ -48,7 +48,7 @@ class dashboard
     private function getChildmenuItems($parentID)
     {
         $menuItems = $this->menuItems;
-        $childMenuItems = $menuItems->where('parent_id', $parentID);
+        $childMenuItems = $menuItems->where('parent_id', $parentID, $strict=false);
         $childItems = [];
         foreach ($childMenuItems as $menuItem){
             $childItems[] = $this->addMenuItem($menuItem);
