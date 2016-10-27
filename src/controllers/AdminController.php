@@ -34,6 +34,8 @@ class AdminController extends CrudController
         $this->grid->add('id', 'ID', true)->style("width:100px");
         $this->grid->add('{{ $first_name }} {{ $last_name}}', 'first name');
         $this->grid->add('email', 'Email');
+        $this->grid->add('sip_display_name', 'Sip name');
+        $this->grid->add('sip_auth_user', 'Sip auth user');
         $this->grid->add('{{ implode(", ", $roles->lists("name")->all()) }}', 'Role');
 
         $this->addStylesToGrid();
@@ -56,6 +58,10 @@ class AdminController extends CrudController
         $this->edit->add('email', 'Email', 'text')->rule('required|min:5');
         $this->edit->add('first_name', 'firstname', 'text');
         $this->edit->add('last_name', 'lastname', 'text');
+        $this->edit->add('sip_uri', 'Sip uri', 'text')->rule('max:250');
+        $this->edit->add('sip_server', 'Sip server', 'text')->rule('max:250');
+        $this->edit->add('sip_auth_user', 'Sip auth user', 'text')->rule('max:99');
+        $this->edit->add('sip_display_name', 'Sip display name', 'text')->rule('max:49');
         $this->edit->add('password', 'password', 'password')->rule('required');
         $this->edit->add('roles', 'Roles', 'checkboxgroup')->options(Role::lists('name', 'id')->all());
 
