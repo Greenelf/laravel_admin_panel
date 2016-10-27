@@ -62,6 +62,7 @@ class AdminController extends CrudController
         $this->edit->add('sip_server', 'Sip server', 'text')->rule('max:250');
         $this->edit->add('sip_auth_user', 'Sip auth user', 'text')->rule('max:99');
         $this->edit->add('sip_display_name', 'Sip display name', 'text')->rule('max:49');
+        $this->edit->add('sip_password', 'Sip password', 'text')->rule('max:254');
         $this->edit->add('password', 'password', 'password')->rule('required');
         $this->edit->add('roles', 'Roles', 'checkboxgroup')->options(Role::lists('name', 'id')->all());
 

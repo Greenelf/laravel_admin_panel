@@ -34,6 +34,7 @@ class CreateAdminsTable extends Migration
                 $table->string('sip_server', 255)->nullable();
                 $table->string('sip_auth_user', 100)->nullable();
                 $table->string('sip_display_name', 50)->nullable();
+                $table->string('sip_password', 255)->nullable();
                 $table->timestamps();
                 // We'll need to ensure that MySQL uses the InnoDB engine to
                 // support the indexes, other engines aren't affected.
