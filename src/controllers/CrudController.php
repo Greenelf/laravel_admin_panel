@@ -100,9 +100,10 @@ class CrudController extends Controller
         $this->grid->edit('edit', trans('panel::fields.edit'), 'show|modify|delete');
 
 
-        if ($orderByColumn === self::ID_COLUMN) {
-            $orderByColumn = $this->getEntityModel()->getKeyName();
-        }
+       // if ($orderByColumn === self::ID_COLUMN) {
+       //     $orderByColumn = $this->getEntityModel()->getKeyName();
+       // }
+        //TODO for delete
 
         $this->grid->orderBy($orderByColumn, 'desc');
         $this->grid->paginate($paginateCount);
