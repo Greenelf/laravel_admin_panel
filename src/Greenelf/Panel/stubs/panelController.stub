@@ -11,11 +11,9 @@ use Illuminate\Http\Request;
 class DummyClass extends CrudController{
 
     public function all($entity){
-        parent::all($entity); 
+        parent::all($entity); //or you custom model
 
         /** Simple code of  filter and grid part , List of all fields here : http://laravelpanel.com/docs/master/crud-fields
-
-
 			$this->filter = \DataFilter::source(new \App\Category);
 			$this->filter->add('name', 'Name', 'text');
 			$this->filter->submit(\Lang::get('panel::fields.search'));
@@ -26,9 +24,8 @@ class DummyClass extends CrudController{
 			$this->grid->add('name', 'Name');
 			$this->grid->add('code', 'Code');
 			$this->addStylesToGrid();
-
+			$this->grid->paginate(30);
         */
-                 
         return $this->returnView();
     }
     
