@@ -4,6 +4,7 @@ namespace Greenelf\Panel;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Input;
+use Symfony\Component\Finder\Finder;
 
 class ExportImportController extends Controller
 {
@@ -18,7 +19,40 @@ class ExportImportController extends Controller
             $appHelper = new libs\AppHelper();
             $className = $appHelper->getNameSpace() . $entity;
         }
+
+        if (!$this->_hasClass($className)) {
+            $finder = new Finder();
+            $files = $finder->files()->name($entity . ".php")->in(\App::basePath() . '/app');
+            foreach ($files as $item) {
+                $fileContent = $item->getContents();
+                $nameSpace = $this->_getNameSpace($fileContent);
+                    if ($nameSpace) {
+                        $className = $nameSpace. "\\" . $entity ;
+                    }
+            }
+        }
         return $className;
+    }
+
+    private function _hasClass($nameSpace)
+    {
+        try {
+            $hasClass = \App::make($nameSpace);
+        } catch (\Exception $ex) {
+            return false;
+        }
+        return true;
+    }
+
+    private function _getNameSpace($fileContent)
+    {
+        if(!preg_match('/extends Model/', $fileContent)) {
+           return null;
+        }
+        if (preg_match('#^namespace\s+(.+?);$#sm', $fileContent, $m)) {
+            return $m[1];
+        }
+        return null;
     }
 
     public function export($entity, $fileType)
