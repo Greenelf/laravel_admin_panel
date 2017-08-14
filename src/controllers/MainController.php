@@ -26,7 +26,7 @@ class MainController extends Controller
 
         //$urls = Link::getModelUrls();
         $panelUrls = Link::getPanelModels();
-
+	$nameSpace = $entity;
         if (in_array($entity, $panelUrls)) {
             $nameSpace = 'Greenelf\Panel\\' . $entity . 'Controller';
         } else {
